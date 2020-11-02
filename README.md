@@ -38,19 +38,19 @@ We will need
    // Admin Bro
    const AdminBro = require('admin-bro')
    const AdminBroExpress = require('@admin-bro/express')
-   
+
    const adminBro = new AdminBro({
      databases: [],
      rootPath: '/admin',
    })
-   
+
    const router = AdminBroExpress.buildRouter(adminBro)
-   
+
    // ============================================
    // Server
    const express = require("express");
    const server = express();
-   
+
    server
      .use(adminBro.options.rootPath, router)
      .listen(5500, () => console.log("Server started"));
@@ -78,7 +78,7 @@ We will need
    // ============================================
    // Database
    const mongoose = require("mongoose");
-   
+
    const ProjectSchema = new mongoose.Schema({
      title: {
        type:String,
@@ -88,35 +88,34 @@ We will need
      completed: Boolean,
      created_at: { type: Date, default: Date.now },
    });
-   
+
    const Project = mongoose.model("Project", ProjectSchema);
-   
+
    // ============================================
    // Admin Bro
    const AdminBro = require('admin-bro')
    const AdminBroExpress = require('@admin-bro/express')
    const AdminBroMongoose = require('@admin-bro/mongoose')
-   
+
    // use mongoose in AdminBro
    AdminBro.registerAdapter(AdminBroMongoose)
-   
+
    // config
-   const rootPath = '/admin'
    const adminBroOptions = new AdminBro({
    	resources: [Project],
-     rootPath
+     rootPath: '/admin'
    })
    const router = AdminBroExpress.buildRouter(adminBroOptions)
-   
-   
+
+
    // ============================================
    // Server
    const express = require("express");
    const server = express();
-   
+
    server
      .use(adminBroOptions.options.rootPath, router)
-   
+
    // =============================================
    // Run App
    const run = async () => {
@@ -124,25 +123,24 @@ We will need
          useNewUrlParser: true,
          useUnifiedTopology: true
      });
-   
+
      await server.listen(5500, () => console.log("Server started"));
    }
-   
+
    run()
    ```
 
-   
+
 
 ## Customize
 
 https://adminbro.com/tutorial-customizing-resources.html
 
-1. Change company name, Article name and add options to resource
+1. Change Project menu name and add options to resource
 
 ```js
 const adminBroOptions = new AdminBro({
 	resources: [
-    User,
     { resource: Project, options: {
       properties: {
         description: { type: 'richtext' },
@@ -155,11 +153,11 @@ const adminBroOptions = new AdminBro({
   locale: {
     translations: {
       labels: {
-        Article: 'My Projects'
+        Project: 'My Projects'
       }
     }
   },
-  rootPath
+  rootPath: '/admin'
 })
 ```
 
