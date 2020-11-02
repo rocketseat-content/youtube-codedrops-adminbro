@@ -106,7 +106,7 @@ We will need
    	resources: [Project],
      rootPath
    })
-   const adminBroRouter = AdminBroExpress.buildRouter(adminBroOptions)
+   const router = AdminBroExpress.buildRouter(adminBroOptions)
    
    
    // ============================================
@@ -115,7 +115,7 @@ We will need
    const server = express();
    
    server
-     .use(adminBro.options.rootPath, router)
+     .use(adminBroOptions.options.rootPath, router)
    
    // =============================================
    // Run App
